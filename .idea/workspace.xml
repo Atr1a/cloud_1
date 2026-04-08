@@ -2,23 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="153d7ee3-81f5-4695-8d56-4fc37fff286f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/-Method" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/CarPrice_Assignment.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dataset.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models/pipeline.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notebooks/code.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/transformers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.github/workflows/Lab1-service-testing.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/Lab1-service-testing.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/InferenceService.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/InferenceService.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/auto-mpg-data.tsv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/auto-mpg.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/code.py" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/code.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/model_utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/transformers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/transformers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/test_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/test_main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/test_model_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/test_model_utils.py" afterDir="false" />
     </list>
