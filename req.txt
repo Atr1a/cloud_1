@@ -1,0 +1,34 @@
+$headers = @{
+  "Authorization" = "Bearer 00000"
+}
+
+Invoke-RestMethod -Uri "https://cloud-1-rn1i.onrender.com/predictions" `
+  -Method POST `
+  -Headers $headers `
+  -ContentType "application/json" `
+  -Body '{
+    "CarName": "jaguar xk",
+    "symboling": 0,
+    "fueltype": "gas",
+    "aspiration": "std",
+    "doornumber": "two",
+    "carbody": "hardtop",
+    "drivewheel": "rwd",
+    "enginelocation": "front",
+    "wheelbase": 102.0,
+    "carlength": 191.7,
+    "carwidth": 70.6,
+    "carheight": 47.8,
+    "curbweight": 4066,
+    "enginetype": "ohcv",
+    "cylindernumber": "twelve",
+    "enginesize": 326,
+    "fuelsystem": "mpfi",
+    "boreratio": 3.54,
+    "stroke": 2.76,
+    "compressionratio": 11.5,
+    "horsepower": 288,
+    "peakrpm": 5500,
+    "citympg": 13,
+    "highwaympg": 17
+  }'

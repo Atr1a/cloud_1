@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
-from src.model_utils import load_model, make_inference
+from model_utils import load_model, make_inference
 from fastapi import Depends, FastAPI, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from pydantic import BaseModel
