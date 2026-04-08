@@ -6,9 +6,9 @@ from fastapi.testclient import TestClient
 @pytest.fixture
 def init_test_client(monkeypatch) -> TestClient:
     def mock_make_inference(*args, **kwargs) -> dict[str, float]:
-        return {"mpg": 48.239}
+        return {"price": 13495.0}
 
-    def mock_load_model(*args, **kwargs) -> None:
+    def mock_load_model(*args, **kwargs):
         return None
 
     monkeypatch.setenv("MODEL_PATH", "faked/model.pkl")
@@ -19,29 +19,57 @@ def init_test_client(monkeypatch) -> TestClient:
     return TestClient(app)
 
 
+@pytest.fixture
+def valid_payload() -> dict:
+    return {
+        "CarName": "mazda rx3",
+        "symboling": 1,
+        "fueltype": "gas",
+        "aspiration": "std",
+        "doornumber": "two",
+        "carbody": "hatchback",
+        "drivewheel": "fwd",
+        "enginelocation": "front",
+        "wheelbase": 93.1,
+        "carlength": 159.1,
+        "carwidth": 64.2,
+        "carheight": 54.1,
+        "curbweight": 1890,
+        "enginetype": "ohc",
+        "cylindernumber": "four",
+        "enginesize": 91,
+        "fuelsystem": "2bbl",
+        "boreratio": 3.03,
+        "stroke": 3.15,
+        "compressionratio": 9.0,
+        "horsepower": 68,
+        "peakrpm": 5000,
+        "citympg": 30,
+        "highwaympg": 31
+    }
+
+
 def test_healthcheck(init_test_client) -> None:
     response = init_test_client.get("/healthcheck")
     assert response.status_code == 200
     assert response.json() == {"status": "ok"}
 
 
-def test_token_correctness(init_test_client) -> None:
+def test_token_correctness(init_test_client, valid_payload) -> None:
     response = init_test_client.post(
         "/predictions",
         headers={"Authorization": "Bearer 00000"},
-        json={"cylinders": 0, "displacement": 0, "horsepower": 0,
-              "weight": 0, "acceleration": 0, "model_year": 0, "origin": 0}
+        json=valid_payload
     )
     assert response.status_code == 200
-    assert "mpg" in response.json()
+    assert "price" in response.json()
 
 
-def test_token_not_correctness(init_test_client):
+def test_token_not_correctness(init_test_client, valid_payload) -> None:
     response = init_test_client.post(
         "/predictions",
         headers={"Authorization": "Bearer kedjkj"},
-        json={"cylinders": 0, "displacement": 0, "horsepower": 0,
-              "weight": 0, "acceleration": 0, "model_year": 0, "origin": 0}
+        json=valid_payload
     )
     assert response.status_code == 401
     assert response.json() == {
@@ -49,11 +77,10 @@ def test_token_not_correctness(init_test_client):
     }
 
 
-def test_token_absent(init_test_client):
+def test_token_absent(init_test_client, valid_payload) -> None:
     response = init_test_client.post(
         "/predictions",
-        json={"cylinders": 0, "displacement": 0, "horsepower": 0,
-              "weight": 0, "acceleration": 0, "model_year": 0, "origin": 0}
+        json=valid_payload
     )
     assert response.status_code == 401
     assert response.json() == {
@@ -61,13 +88,11 @@ def test_token_absent(init_test_client):
     }
 
 
-def test_inference(init_test_client):
+def test_inference(init_test_client, valid_payload) -> None:
     response = init_test_client.post(
         "/predictions",
         headers={"Authorization": "Bearer 00000"},
-        json={"cylinders": 4, "displacement": 113.0, "horsepower": 95.0,
-              "weight": 2228.0, "acceleration": 14.0, "model_year": 71,
-              "origin": 3}
+        json=valid_payload
     )
     assert response.status_code == 200
-    assert response.json()["mpg"] == 48.239
+    assert response.json()["price"] == 13495.0

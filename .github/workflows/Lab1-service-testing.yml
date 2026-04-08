@@ -28,4 +28,4 @@ jobs:
           pycodestyle src test
       - name: Test with pytest
         run: |
-          PYTHONPATH=./:./src/ pytest test
+          $env:PYTHONPATH=".\src" pytest test

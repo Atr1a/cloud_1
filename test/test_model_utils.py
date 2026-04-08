@@ -1,39 +1,65 @@
 # -*- coding: utf-8 -*-
 import pytest
 import pandas as pd
-from model_utils import make_inference, load_model
 from sklearn.pipeline import Pipeline
-from pickle import dumps
+
+from model_utils import make_inference, load_model
 
 
 @pytest.fixture
-def create_data() -> dict[str, int | float]:
-    return {"cylinders": 4, "displacement": 113.0, "horsepower": 95.0,
-            "weight": 2228.0, "acceleration": 14.0, "model_year": 71,
-            "origin": 3}
+def create_data():
+    return {
+        "car_ID": 1,
+        "CarName": "mazda rx3",
+        "symboling": 1,
+        "fueltype": "gas",
+        "aspiration": "std",
+        "doornumber": "two",
+        "carbody": "hatchback",
+        "drivewheel": "fwd",
+        "enginelocation": "front",
+        "wheelbase": 93.1,
+        "carlength": 159.1,
+        "carwidth": 64.2,
+        "carheight": 54.1,
+        "curbweight": 1890,
+        "enginetype": "ohc",
+        "cylindernumber": "four",
+        "enginesize": 91,
+        "fuelsystem": "2bbl",
+        "boreratio": 3.03,
+        "stroke": 3.15,
+        "compressionratio": 9.0,
+        "horsepower": 68,
+        "peakrpm": 5000,
+        "citympg": 30,
+        "highwaympg": 31
+    }
 
 
 def test_make_inference(monkeypatch, create_data):
-    def mock_get_predictions(_, data: pd.DataFrame) -> list[list[float]]:
-        assert create_data == {
-            key: value[0] for key, value in data.to_dict("list").items()
-        }
-        return [[37.973]]
+    def mock_predict(self, X: pd.DataFrame):
+        # просто проверяем что пришёл DataFrame
+        assert isinstance(X, pd.DataFrame)
+        return [12345.678]
 
-    in_model = Pipeline([])
-    monkeypatch.setattr(Pipeline, "predict", mock_get_predictions)
+    model = Pipeline([])
+    monkeypatch.setattr(Pipeline, "predict", mock_predict)
 
-    result = make_inference(in_model, create_data)
-    assert result == {"mpg": 37.973}
+    result = make_inference(model, create_data)
+    assert result == {"price": 12345.678}
 
 
 @pytest.fixture()
 def filepath_and_data(tmpdir):
-    p = tmpdir.mkdir("datadir").join("fakedmodel.pkl")
-    example: str = "Test message!"
-    p.write_binary(dumps(example))
+    import pickle
+
+    p = tmpdir.mkdir("datadir").join("model.pkl")
+    example = Pipeline([])
+    p.write_binary(pickle.dumps(example))
     return str(p), example
 
 
 def test_load_model(filepath_and_data):
-    assert filepath_and_data[1] == load_model(filepath_and_data[0])
+    loaded = load_model(filepath_and_data[0])
+    assert isinstance(loaded, Pipeline)

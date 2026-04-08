@@ -7,13 +7,30 @@ from pydantic import BaseModel
 
 
 class Instance(BaseModel):
-    cylinders: int
-    displacement: float
-    horsepower: float
-    weight: float
-    acceleration: float
-    model_year: int
-    origin: int
+    CarName: str
+    symboling: int
+    fueltype: str
+    aspiration: str
+    doornumber: str
+    carbody: str
+    drivewheel: str
+    enginelocation: str
+    wheelbase: float
+    carlength: float
+    carwidth: float
+    carheight: float
+    curbweight: int
+    enginetype: str
+    cylindernumber: str
+    enginesize: int
+    fuelsystem: str
+    boreratio: float
+    stroke: float
+    compressionratio: float
+    horsepower: int
+    peakrpm: int
+    citympg: int
+    highwaympg: int
 
 
 app = FastAPI()
@@ -25,8 +42,7 @@ if model_path is None:
 
 
 async def is_token_correct(token: str) -> bool:
-    dummy_correct_token = "00000"
-    return token == dummy_correct_token
+    return token == "00000"
 
 
 async def check_token(token: str = Depends(oauth2_scheme)) -> None:
@@ -44,6 +60,9 @@ def healthcheck() -> dict[str, str]:
 
 
 @app.post("/predictions")
-async def predictions(instance: Instance,
-                      token: str = Depends(check_token)) -> dict[str, float]:
-    return make_inference(load_model(model_path), instance.dict())
+async def predictions(
+    instance: Instance,
+    token: str = Depends(check_token)
+) -> dict[str, float]:
+    model = load_model(model_path)
+    return make_inference(model, instance.model_dump())
